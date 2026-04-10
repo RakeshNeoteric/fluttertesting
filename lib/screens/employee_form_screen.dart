@@ -73,6 +73,23 @@ class _EmployeeFormScreenState extends State<EmployeeFormScreen> {
                             Navigator.pop(context);
                           }
                         },
+
+                        // onPressed: () async {
+                        //   if (_formKey.currentState!.validate()) {
+                        //     final newEmployee = Employee(
+                        //       id: 0, // JSON server will auto-generate
+                        //       name: nameController.text,
+                        //       email: emailController.text,
+                        //       position: positionController.text,
+                        //       department: departmentController.text,
+                        //     );
+
+                        //     await EmployeeService.addEmployee(newEmployee);
+
+                        //     Navigator.pop(context, true); // return success
+                        //   }
+                        // },
+
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.white,
                           backgroundColor: Colors.transparent,

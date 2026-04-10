@@ -136,73 +136,86 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
     );
   }
 
-
   Widget _buildTopHeader() {
-  return Container(
-    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-    decoration: BoxDecoration(
-      color: Colors.white,
-      boxShadow: [
-        BoxShadow(
-          color: Colors.black.withOpacity(0.08),
-          blurRadius: 8,
-          offset: const Offset(0, 2),
-        )
-      ],
-    ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: const [
-            Icon(Icons.home_outlined, color: Colors.black54),
-            SizedBox(width: 12),
-            Text(
-              "Employee Management",
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.w600,
-                color: Colors.black87,
-              ),
-            ),
-          ],
-        ),
-
-        /// BUTTON (Styled like image)
-        Container(
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [Color(0xFF6C63FF), Color(0xFF5A4BFF)],
-            ),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: ElevatedButton.icon(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const EmployeeFormScreen(),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          )
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: const [
+              Icon(Icons.home_outlined, color: Colors.black54),
+              SizedBox(width: 12),
+              Text(
+                "Employee Management",
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black87,
                 ),
-              );
-            },
-            icon: const Icon(Icons.add, color: Colors.white),
-            label: const Text("Add Employee"),
-            style: ElevatedButton.styleFrom(
-              elevation: 0,
-              foregroundColor: Colors.white,
-              backgroundColor: Colors.transparent,
-              shadowColor: Colors.transparent,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+              ),
+            ],
+          ),
+
+          /// BUTTON (Styled like image)
+          Container(
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Color(0xFF6C63FF), Color(0xFF5A4BFF)],
+              ),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: ElevatedButton.icon(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const EmployeeFormScreen(),
+                  ),
+                );
+              },
+
+              // onPressed: () async {
+              //   final result = await Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //       builder: (_) => const EmployeeFormScreen(),
+              //     ),
+              //   );
+
+              //   if (result == true) {
+              //     setState(() {
+              //       futureEmployees = EmployeeService.fetchEmployees();
+              //     });
+              //   }
+              // },
+              icon: const Icon(Icons.add, color: Colors.white),
+              label: const Text("Add Employee"),
+              style: ElevatedButton.styleFrom(
+                elevation: 0,
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.transparent,
+                shadowColor: Colors.transparent,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
             ),
           ),
-        ),
-      ],
-    ),
-  );
+        ],
+      ),
+    );
+  }
 }
-}
-
-

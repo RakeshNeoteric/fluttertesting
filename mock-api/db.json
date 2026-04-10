@@ -1,25 +1,27 @@
 {
   "employees": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Rakesh Kumar",
       "email": "rakesh.kumar@company.com",
       "position": "Software Engineer",
       "department": "Engineering"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Jane Smith",
       "email": "jane.smith@company.com",
       "position": "Product Manager",
       "department": "Product"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Mike Johnson",
       "email": "mike.johnson@company.com",
       "position": "UX Designer",
       "department": "Design"
     }
-  ]
+    
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

@@ -22,4 +22,22 @@ class EmployeeService {
       throw Exception("Error: $e");
     }
   }
+
+
+  static Future<void> addEmployee(Employee employee) async {
+  final response = await http.post(
+    Uri.parse(baseUrl),
+    headers: {'Content-Type': 'application/json'},
+    body: jsonEncode({
+      "name": employee.name,
+      "email": employee.email,
+      "position": employee.position,
+      "department": employee.department,
+    }),
+  );
+
+  if (response.statusCode != 201) {
+    throw Exception("Failed to add employee");
+  }
+}
 }
