@@ -38,81 +38,51 @@ class EmployeeListScreen extends StatelessWidget {
     ),
   ];
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF5F7FB),
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    backgroundColor: const Color(0xFFF5F7FB),
 
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
+    body: Column(
+      children: [
+        /// ✅ FIXED HEADER (TOP BAR)
+        _buildTopHeader(),
 
-            /// 🔹 TOP BAR
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        /// ✅ BODY CONTENT
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
               children: [
-                Row(
-                  children: const [
-                    Icon(Icons.home_outlined),
-                    SizedBox(width: 10),
-                    Text(
-                      "Employee Management",
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
+                const SizedBox(height: 10),
 
-                /// ADD BUTTON
-                ElevatedButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(Icons.add),
-                  label: const Text("Add Employee"),
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 14),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    backgroundColor: Colors.deepPurple,
+                /// TABLE
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 10,
+                      )
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      _buildHeader(),
+                      ...employees.map((e) => _buildRow(e)).toList(),
+                    ],
                   ),
                 ),
               ],
             ),
-
-            const SizedBox(height: 20),
-
-            /// 🔹 TABLE CONTAINER
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 10,
-                  )
-                ],
-              ),
-              child: Column(
-                children: [
-
-                  /// HEADER ROW
-                  _buildHeader(),
-
-                  /// DATA ROWS
-                  ...employees.map((e) => _buildRow(e)).toList(),
-                ],
-              ),
-            ),
-          ],
+          ),
         ),
-      ),
-    );
-  }
+      ],
+    ),
+  );
+}
 
   /// 🔹 HEADER
   Widget _buildHeader() {
@@ -171,4 +141,65 @@ class EmployeeListScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget _buildTopHeader() {
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+    decoration: BoxDecoration(
+      color: Colors.white,
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.08),
+          blurRadius: 8,
+          offset: const Offset(0, 2),
+        )
+      ],
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: const [
+            Icon(Icons.home_outlined, color: Colors.black54),
+            SizedBox(width: 12),
+            Text(
+              "Employee Management",
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w600,
+                color: Colors.black87,
+              ),
+            ),
+          ],
+        ),
+
+        /// BUTTON (Styled like image)
+        Container(
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: [Color(0xFF6C63FF), Color(0xFF5A4BFF)],
+            ),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: ElevatedButton.icon(
+            onPressed: () {},
+            icon: const Icon(Icons.add, color: Colors.white),
+            label: const Text("Add Employee"),
+            style: ElevatedButton.styleFrom(
+              elevation: 0,
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.transparent,
+              shadowColor: Colors.transparent,
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 20, vertical: 14),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
 }
