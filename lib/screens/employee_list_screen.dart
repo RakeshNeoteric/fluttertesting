@@ -1,88 +1,74 @@
 import 'package:flutter/material.dart';
 
-class Employee {
-  final String name;
-  final String email;
-  final String position;
-  final String department;
+import '../model/employee.dart';
+import '../services/employee_service.dart';
 
-  const Employee({
-    required this.name,
-    required this.email,
-    required this.position,
-    required this.department,
-  });
-}
-
-class EmployeeListScreen extends StatelessWidget {
+class EmployeeListScreen extends StatefulWidget {
   const EmployeeListScreen({super.key});
 
-  final List<Employee> employees = const [
-    Employee(
-      name: 'John Doe',
-      email: 'john.doe@company.com',
-      position: 'Software Engineer',
-      department: 'Engineering',
-    ),
-    Employee(
-      name: 'Jane Smith',
-      email: 'jane.smith@company.com',
-      position: 'Product Manager',
-      department: 'Product',
-    ),
-    Employee(
-      name: 'Mike Johnson',
-      email: 'mike.johnson@company.com',
-      position: 'UX Designer',
-      department: 'Design',
-    ),
-  ];
+  @override
+  State<EmployeeListScreen> createState() => _EmployeeListScreenState();
+}
 
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-    backgroundColor: const Color(0xFFF5F7FB),
+class _EmployeeListScreenState extends State<EmployeeListScreen> {
+  late Future<List<Employee>> futureEmployees;
 
-    body: Column(
-      children: [
-        /// ✅ FIXED HEADER (TOP BAR)
-        _buildTopHeader(),
+  @override
+  void initState() {
+    super.initState();
+    futureEmployees = EmployeeService.fetchEmployees();
+  }
 
-        /// ✅ BODY CONTENT
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                const SizedBox(height: 10),
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFFF5F7FB),
+      body: Column(
+        children: [
+          /// ✅ FIXED HEADER (TOP BAR)
+          _buildTopHeader(),
 
-                /// TABLE
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
-                        blurRadius: 10,
-                      )
-                    ],
-                  ),
-                  child: Column(
-                    children: [
-                      _buildHeader(),
-                      ...employees.map((e) => _buildRow(e)).toList(),
-                    ],
-                  ),
-                ),
-              ],
+          /// ✅ BODY CONTENT
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: FutureBuilder<List<Employee>>(
+                future: futureEmployees,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                  if (snapshot.hasError) {
+                    return Center(child: Text("Error: ${snapshot.error}"));
+                  }
+
+                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Center(child: Text("No Employees Found"));
+                  }
+
+                  final employees = snapshot.data!;
+
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Column(
+                      children: [
+                        _buildHeader(),
+                        ...employees.map((e) => _buildRow(e)).toList(),
+                      ],
+                    ),
+                  );
+                },
+              ),
             ),
           ),
-        ),
-      ],
-    ),
-  );
-}
+        ],
+      ),
+    );
+  }
 
   /// 🔹 HEADER
   Widget _buildHeader() {
@@ -191,8 +177,7 @@ Widget _buildTopHeader() {
               foregroundColor: Colors.white,
               backgroundColor: Colors.transparent,
               shadowColor: Colors.transparent,
-              padding: const EdgeInsets.symmetric(
-                  horizontal: 20, vertical: 14),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
