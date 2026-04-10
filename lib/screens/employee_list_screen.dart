@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertesting/screens/employee_form_screen.dart';
 
 import '../model/employee.dart';
 import '../services/employee_service.dart';
@@ -113,7 +114,14 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
             child: Row(
               children: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => EmployeeFormScreen(employee: e),
+                      ),
+                    );
+                  },
                   icon: const Icon(Icons.edit, color: Colors.blue),
                 ),
                 IconButton(
@@ -127,9 +135,9 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
       ),
     );
   }
-}
 
-Widget _buildTopHeader() {
+
+  Widget _buildTopHeader() {
   return Container(
     padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
     decoration: BoxDecoration(
@@ -169,7 +177,14 @@ Widget _buildTopHeader() {
             borderRadius: BorderRadius.circular(12),
           ),
           child: ElevatedButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const EmployeeFormScreen(),
+                ),
+              );
+            },
             icon: const Icon(Icons.add, color: Colors.white),
             label: const Text("Add Employee"),
             style: ElevatedButton.styleFrom(
@@ -188,3 +203,6 @@ Widget _buildTopHeader() {
     ),
   );
 }
+}
+
+
